@@ -63,9 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     fun fetchContacts(){
         val projection =
-            arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME)
-
-        // Perform the query
+            arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts.HAS_PHONE_NUMBER)
 
         // Perform the query
         val cursor = contentResolver.query(
@@ -86,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     val displayName =
                         cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                     var phoneNumber = ""
-                 /*   if (cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.HAS_PHONE_NUMBER))
+                    if (cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.HAS_PHONE_NUMBER))
                             .toInt() > 0
                     ) {
                         val phones = contentResolver.query(
@@ -102,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                             Log.e("Number", phoneNumber)
                         }
                         phones?.close()
-                    }*/
+                    }
                     var contactModel = ContactModel(contactId, displayName, phoneNumber)
                     contactList.add(contactModel)
                     // Do something with the contact details
@@ -115,8 +113,6 @@ class MainActivity : AppCompatActivity() {
                 }
             } finally {
                 cursor.close() // Close the cursor to avoid memory leaks
-
-                Log.e(TAG, "Size ${contactList.size}")
             }
         }
     }

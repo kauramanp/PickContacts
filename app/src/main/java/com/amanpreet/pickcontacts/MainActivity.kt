@@ -26,7 +26,19 @@ class MainActivity : AppCompatActivity() {
         if(it){
             fetchContacts()
         }else{
-
+            AlertDialog.Builder(this).apply {
+                setTitle(resources.getString(R.string.give_permission))
+                setPositiveButton(resources.getString(R.string.ok)){_,_->
+                    val intent = Intent(
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                    )
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+                setNegativeButton(resources.getString(R.string.cancel)){_,_->}
+                show()
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
